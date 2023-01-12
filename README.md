@@ -11,9 +11,8 @@ A script that scrapes places from Google Maps and export the result into a JSON 
 ## Quickstart
 
 + Run the `app.py`
-  + The script will open Google Chrome and do some automation steps
+  + The script will do some automation steps in the background
   + Leave it running until the console says "Done"
-  + Do not focus on another Google Chrome
 + Check the `places.json` in the project based directory
 + Change the `search_text` if needed
 
