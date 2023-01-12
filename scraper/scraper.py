@@ -89,7 +89,9 @@ class Scraper:
 
             # If the loading is not responsive, scroll up then scroll down to send another request
             if place_feed_count == previous_place_feed_count:
-                ordinate -= scroll_height
+                scroll_up_offset = 100
+                ordinate -= scroll_up_offset
+                print("ordinate to scroll up: " + str(ordinate))
                 self.scroll_top(scrollable_container, ordinate)
                 time.sleep(2)
 
