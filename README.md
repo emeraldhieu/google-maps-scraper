@@ -5,8 +5,8 @@ A script that scrapes places from Google Maps and export the result into a JSON 
 ## Requirements
 
 + Python 3.11
-+ Selenium 3.141.0
-+ Webdriver Manager
++ [Selenium 4.7.2](https://pypi.org/project/selenium/4.7.2)
++ [Webdriver Manager](https://github.com/SergeyPirogov/webdriver_manager)
 
 ## Quickstart
 
