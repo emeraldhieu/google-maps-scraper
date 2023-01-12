@@ -2,14 +2,21 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 import time
 import json
 
 
 class Scraper:
-    def __init__(self):
-        self.driver = webdriver.Chrome(ChromeDriverManager().install())
+
+    def __init__(self, headless=True):
+        chrome_options = Options()
+        if headless is True:
+            chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--window-size=1920x1080")
+        self.driver = webdriver.Chrome(executable_path=ChromeDriverManager().install(),
+                                       chrome_options=chrome_options)
 
     def scrape(self, search_text, file_path):
         url = "https://maps.google.com"
