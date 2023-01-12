@@ -2,8 +2,8 @@ from scraper.scraper import Scraper
 
 
 def run():
-    # 1) Pass headless=True if you want to run the browser in background
-    scraper = Scraper(headless=False)
+    # 1) Pass headless=False if you want to see Chrome's automation
+    scraper = Scraper(headless=True)
 
     # 2) Pass the text you want to search for
     search_text = "Surf shops in Florida"
