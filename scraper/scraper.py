@@ -79,25 +79,29 @@ class Scraper:
         bottom_panel = self.get_bottom_panel()
 
         ordinate = 0
-        scroll_height = self.get_scroll_height(scrollable_container)
+        client_height = self.get_container_client_height(scrollable_container)
         previous_place_feed_count = 0
         while bottom_panel is None:
-            place_feed_count = self.get_place_feed_count()
+            print("======================")
             print("previous_place_feed_count: " + str(previous_place_feed_count))
+
+            place_feed_count = self.get_place_feed_count()
             print("place_feed_count: " + str(place_feed_count))
+
+            # If the loading is not responsive,
+            # scroll up a half of the entire scroll height
+            # then scroll down to send another request
+            if place_feed_count == previous_place_feed_count:
+                scroll_height = self.get_container_scroll_height(scrollable_container)
+                self.scroll_top(scrollable_container, scroll_height / 2)
+                time.sleep(1)
+
+            ordinate += client_height
             print("ordinate: " + str(ordinate))
 
-            # If the loading is not responsive, scroll up then scroll down to send another request
-            if place_feed_count == previous_place_feed_count:
-                scroll_up_offset = 100
-                ordinate -= scroll_up_offset
-                print("ordinate to scroll up: " + str(ordinate))
-                self.scroll_top(scrollable_container, ordinate)
-                time.sleep(2)
-
-            ordinate += scroll_height
             self.scroll_top(scrollable_container, ordinate)
             time.sleep(2)
+
             bottom_panel = self.get_bottom_panel()
             previous_place_feed_count = place_feed_count
 
@@ -107,8 +111,11 @@ class Scraper:
     def get_bottom_panel(self):
         return self.get_element_from_driver(".m6QErb.tLjsW.eKbjU");
 
-    def get_scroll_height(self, scrollable_container):
+    def get_container_client_height(self, scrollable_container):
         return self.driver.execute_script("return arguments[0].clientHeight", scrollable_container)
+
+    def get_container_scroll_height(self, scrollable_container):
+        return self.driver.execute_script("return arguments[0].scrollHeight", scrollable_container)
 
     def get_place_feed_count(self):
         return len(self.get_place_feeds())
