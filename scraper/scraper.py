@@ -106,7 +106,7 @@ class Scraper:
         return self.get_element_from_driver(".m6QErb.tLjsW.eKbjU");
 
     def get_scroll_height(self, scrollable_container):
-        return self.driver.execute_script("return arguments[0].scrollHeight", scrollable_container)
+        return self.driver.execute_script("return arguments[0].clientHeight", scrollable_container)
 
     def get_place_feed_count(self):
         return len(self.get_place_feeds())
