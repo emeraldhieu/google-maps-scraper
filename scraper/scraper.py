@@ -179,7 +179,7 @@ class Scraper:
 
     def get_phone_number(self, place_feed):
         element = self.get_element(place_feed,
-                                   ".UaQhfb > .W4Efsd > :nth-child(3) > :nth-child(2) > jsl > :nth-child(2)")
+                                   ".UaQhfb > .W4Efsd:last-of-type > :nth-child(3) > :nth-child(2) > jsl > :nth-child(2)")
         if element is None:
             return ""
         return element.text
