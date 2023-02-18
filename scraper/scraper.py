@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import json
 
@@ -31,9 +33,6 @@ class Scraper:
         # Press Return
         search_input.send_keys(Keys.RETURN)
 
-        # Wait for the search results to appear
-        time.sleep(5)
-
         # Scroll down until the bottom panel is found
         self.scroll_to_bottom()
 
@@ -59,7 +58,6 @@ class Scraper:
             address = self.get_address(place_feed)
             place_obj["address"] = address
 
-            # TODO Investigate why this element is None though I can get the element in Chrome's developer's console
             phone_number = self.get_phone_number(place_feed)
             place_obj["phoneNumber"] = phone_number
 
@@ -106,7 +104,7 @@ class Scraper:
             previous_place_feed_count = place_feed_count
 
     def get_scrollable_container(self):
-        return self.get_element_from_driver(".m6QErb.DxyBCb.kA9KIf.dS8AEf.ecceSd[role='feed']")
+        return self.wait_for_element(".m6QErb.DxyBCb.kA9KIf.dS8AEf.ecceSd[role='feed']")
 
     def get_bottom_panel(self):
         return self.get_element_from_driver(".m6QErb.tLjsW.eKbjU");
@@ -134,6 +132,12 @@ class Scraper:
             return element
         except NoSuchElementException:
             pass
+        
+    def wait_for_element(self, selector):
+        element = WebDriverWait(self.driver, 10, .5).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+        )
+        return element
 
     def get_elements_from_driver(self, selector):
         try:
@@ -175,7 +179,7 @@ class Scraper:
 
     def get_phone_number(self, place_feed):
         element = self.get_element(place_feed,
-                                   ".UaQhfb > :nth-child(4) > :nth-child(4) > :nth-child(2) > jsl > :nth-child(2)")
+                                   ".UaQhfb > .W4Efsd:last-of-type > :nth-child(3) > :nth-child(2) > jsl > :nth-child(2)")
         if element is None:
             return ""
         return element.text
