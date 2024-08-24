@@ -56,17 +56,17 @@ At base project directory, run
 virtualenv venv
 ```
 
-Install necessary modules
-```
-pip3 install -r requirements.txt
-```
-
 Activate the virtual environment
 ```
 source venv/bin/activate
 ```
 
-To deactivate it, run this during being "activated"
+Install necessary modules
+```
+pip3 install -r requirements.txt
+```
+
+To deactivate the virtual environment, run this during being "activated"
 ```
 deactivate
 ```
